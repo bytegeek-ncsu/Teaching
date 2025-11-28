@@ -1,0 +1,36 @@
+# Compiled Object files
+*.o
+*.obj
+# Precompiled Headers
+*.gch
+*.pch
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+# Compiled Static libraries
+*.a
+*.lib
+# Executables
+*.exe
+*.out
+*.app
+# Debugger Files
+*.pdb
+*.ilk
+# IDE-specific files (e.g., Visual Studio, CLion)
+vscode/
+idea/
+*.sln
+*.vcxproj*
+
+#Folders to be ignored
+LittleCCompiler/
+ModernC++/LearnC++/
+ModernC++/TheThe-C-20-Masterclass-Source-Code/
+UdemyCmake/
+VSCODE-GIT/
+C++/
+Make/
+Python/
+.vscode/
