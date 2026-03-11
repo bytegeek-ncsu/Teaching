@@ -42,6 +42,17 @@ struct Array1 * merge(struct Array1 *, struct Array1 *);
 struct Array1 * union1(struct Array1 *, struct Array1 *);
 struct Array1 * intersection(struct Array1 *, struct Array1 *);
 struct Array1 * difference(struct Array1 *, struct Array1 *);
+void findingMissingElement(struct Array1 *);
+void findingMissingElement1(struct Array1 *);
+void findingMissingElement2(struct Array1 *, int);
+void findingDuplicateSorted(struct Array1 *);
+void findingDuplicateSorted1(struct Array1 *, int);
+void findingDuplicateUnSorted(struct Array1 *);
+void findingDuplicateUnSorted1(struct Array1 *, int);
+void findingPairUnsorted(struct Array1 *, int);
+void findingPairUnSorted1(struct Array1 *, int, int);
+void findingPairSorted(struct Array1 *, int);
+
 
 
 
@@ -93,6 +104,10 @@ int main(){
     a3 = difference(&a1, &a2);
 
     display1(a3);
+
+    //struct Array1 a4 = {{3,7,4,9,12,6,1,11,2,10},10,10};
+    struct Array1 a4 = {{1,3,4,5,6,8,9,10,12,14},10,10};
+    findingPairSorted(&a4,10);
    
 
     return 0;
@@ -385,4 +400,157 @@ struct Array1 * difference(struct Array1 *a1, struct Array1 *a2){
     
 
 }
+
+//In this case the array is a sequence of numbers starting at random number
+//We have multiple missing elements
+void findingMissingElement(struct Array1 *a1){
+    int low = a1->A[0];
+    int diff = low - 0;
+
+    for (int i = 0; i < a1->length; i++){
+        if (a1->A[i] - i != diff){
+            printf("Missing Element is: %d\n",i+diff );
+            diff++;
+        }
+    }
+
+}
+
+//In this case the array is a sequence of numbers starting at random number
+void findingMissingElement1(struct Array1 *a1){
+    int low = a1->A[0];
+    int diff = low - 0;
+
+    for (int i = 0; i < a1->length; i++){
+        if (a1->A[i] - i != diff){
+            while (a1->A[i] - i != diff){
+                printf("missing Element :%d\n", i+diff);
+                diff++;
+            }
+        }
+    }
+
+}
+
+//In this case the array is a sequence of numbers starting at random number
+void findingMissingElement2(struct Array1 *a1, int max){
+
+    int *H;
+    H = (int*) malloc(max*sizeof(int));
+    for (int i= 0; i < max; i++)
+        H[i] = 0;
+
+    for (int i = 0; i < a1->length; i++)
+        H[a1->A[i]]++;
+
+    for (int i= 1; i < max; i++){
+        if (H[i] == 0)
+            printf("Missing element is::%d\n", i);
+    }
+}
+
+void findingDuplicateSorted(struct Array1 *a){
+    int lastDuplicate = 0;
+    int count = 1;
+    for(int i=0; i<a->length-1; i++){
+        if (a->A[i] == a->A[i+1]){
+            lastDuplicate = a->A[i];
+           while (a->A[i+1] == lastDuplicate ){
+            count++;
+            i++;
+           }
+
+           printf("Duplicate is: %d and count is: %d\n", lastDuplicate,count);
+        }
+        count = 1;
+    }
+
+}
+void findingDuplicateSorted1(struct Array1 *a1, int max){
+    int *H;
+    H = (int*) malloc(max*sizeof(int));
+    for (int i= 0; i < max; i++)
+        H[i] = 0;
+
+    for (int i = 0; i < a1->length; i++)
+        H[a1->A[i]]++;
+
+    for (int i= 1; i < max; i++){
+        if (H[i] > 1)
+            printf("Duplicate element is::%d count is : %d\n", i, H[i]);
+    }
+}
+void findingDuplicateUnSorted(struct Array1 *a){
+    for (int i=0; i<a->length-1; i++){
+        int count = 1;
+        if (a->A[i] != -1){
+            for (int j = i+1; j<a->length; j++){
+                if (a->A[i] == a->A[j]){
+                    count++;
+                    a->A[j] = -1;
+                }
+            }
+            if (count>1)
+                printf("Duplicate from unsorted: %d count is: %d\n", a->A[i], count);
+        }
+
+    }
+
+}
+void findingDuplicateUnSorted1(struct Array1 *a1, int max){
+    int *H;
+    H = (int*) malloc(max*sizeof(int));
+    for (int i= 0; i < max; i++)
+        H[i] = 0;
+
+    for (int i = 0; i < a1->length; i++)
+        H[a1->A[i]]++;
+
+    for (int i= 1; i < max; i++){
+        if (H[i] > 1)
+            printf("Duplicate element is::%d count is : %d\n", i, H[i]);
+    }
+}
+void findingPairUnsorted(struct Array1 *a, int sum){
+    for (int i = 0; i < a->length-1; i++){
+        for (int j = i+1; j < a->length; j++)
+            if (a->A[i]+a->A[j] == sum){
+                printf("The pair of elements is: %d, %d\n", a->A[i],a->A[j] );
+            }
+    
+    }
+
+}
+void findingPairUnSorted1(struct Array1 *a1,int max, int sum){
+    int *H;
+    H = (int*) malloc(max*sizeof(int));
+    for (int i= 0; i < max; i++)
+        H[i] = 0;
+
+    for (int i = 0; i < a1->length; i++){
+        if ((sum - a1->A[i] > 0) && (H[sum - a1->A[i]] != 0)){
+            printf("Find the pairs %d, %d \n", sum-a1->A[i], a1->A[i]);
+        }
+        H[a1->A[i]]++;
+    }
+
+    
+}
+void findingPairSorted(struct Array1 *a1, int sum){
+    int i=0, j=a1->length-1;
+
+    while (i<j){
+        if(a1->A[i]+a1->A[j]> sum)
+            --j;
+        else if(a1->A[i]+a1->A[j]<sum)
+            ++i;
+        else{
+            printf("We find the pairs %d, %d\n", a1->A[i],a1->A[j]);
+            ++i;
+            ++j;
+        }
+    }
+
+}
+
 
